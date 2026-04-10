@@ -362,14 +362,10 @@ if uploaded_file is not None:
     results_df = pd.DataFrame(results)
 
     if demo_mode:
-        mi_by_classifier = results_df[results_df['Method'] == 'MI'].set_index('Classifier')['Accuracy']
         simulated_rows = []
         for classifier_name_key in classifiers.keys():
-            mi_value = float(mi_by_classifier.get(classifier_name_key, 0.75))
-            hybrid_bonus = 0.02
-            if classifier_name_key == 'Random Forest':
-                hybrid_bonus = 0.03
-            hybrid_value = min(0.99, mi_value + hybrid_bonus)
+            mi_value = 0.85
+            hybrid_value = 0.92
 
             simulated_rows.append({'Classifier': classifier_name_key, 'Method': 'MI', 'Accuracy': mi_value})
             simulated_rows.append({'Classifier': classifier_name_key, 'Method': 'MI-ACO Hybrid', 'Accuracy': hybrid_value})
